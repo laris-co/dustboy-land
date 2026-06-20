@@ -103,7 +103,7 @@ export default function ConnectWallet() {
           <rect x="3" y="6" width="18" height="13" rx="2.5" stroke="currentColor" stroke-width="1.8" />
           <path d="M16.5 12.5h.01" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" />
         </svg>
-        <span className="hidden sm:inline">{busy ? "กำลังเชื่อม…" : "เชื่อมวอลเล็ต"}</span>
+        <span className="hidden md:inline">{busy ? "กำลังเชื่อม…" : "เชื่อมวอลเล็ต"}</span>
       </button>
       {alert}
     </div>

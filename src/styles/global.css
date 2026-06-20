@@ -129,6 +129,27 @@ a { color: inherit; text-decoration: none; }
   border-radius: 2px;
 }
 
+/* animated logo — a PM2.5 "sensor pulse": the centre dot breathes, the diamond turns on hover */
+.logo-dot {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: sensor-pulse 2.6s var(--ease-out-expo) infinite;
+}
+@keyframes sensor-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.55); }
+}
+.logo-mark .logo-diamond {
+  transform-origin: center;
+  transform-box: fill-box;
+  transition: transform 0.55s var(--ease-out-expo);
+}
+.logo-link:hover .logo-diamond { transform: rotate(90deg); }
+@media (prefers-reduced-motion: reduce) {
+  .logo-dot { animation: none; }
+  .logo-mark .logo-diamond { transition: none; }
+}
+
 /* subtle haze field behind the hero — not glass, not gradient-text; a real atmosphere */
 .haze {
   position: absolute;

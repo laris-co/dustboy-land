@@ -15,13 +15,18 @@ const isActive = (href: string) =>
 
 <header class="sticky top-0 z-40 border-b border-border bg-bg/95 backdrop-blur-sm">
   <nav aria-label="หลัก" class="mx-auto flex max-w-5xl items-center justify-between gap-3 px-5 py-3">
-    <a href="/" class="inline-flex min-h-11 items-center gap-2.5 font-display text-[15px] font-700 tracking-tight">
-      <span aria-hidden="true" class="grid h-7 w-7 place-items-center rounded-md border border-border-strong bg-surface text-accent">◇</span>
+    <a href="/" class="logo-link inline-flex min-h-11 items-center gap-2.5 font-display text-[15px] font-700 tracking-tight">
+      <span aria-hidden="true" class="grid h-7 w-7 place-items-center rounded-md border border-border-strong bg-surface text-accent">
+        <svg class="logo-mark" width="18" height="18" viewBox="0 0 32 32" fill="none">
+          <path class="logo-diamond" d="M16 5 L26 16 L16 27 L6 16 Z" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" />
+          <circle class="logo-dot" cx="16" cy="16" r="3" fill="currentColor" />
+        </svg>
+      </span>
       <span>DustBoy<span class="text-faint"> · </span><span class="text-accent">PhD</span></span>
     </a>
 
     <div class="flex items-center gap-1.5 sm:gap-2">
-      <div class="hidden items-center gap-1 sm:flex">
+      <div class="hidden items-center gap-1 md:flex">
         {links.map((l) => (
           <a
             href={l.href}
@@ -38,7 +43,7 @@ const isActive = (href: string) =>
       <ThemeToggle />
       <ConnectWallet client:idle />
 
-      <details class="relative sm:hidden">
+      <details class="relative md:hidden">
         <summary
           aria-label="เมนู"
           class="grid h-11 w-11 cursor-pointer list-none place-items-center rounded-md border border-border-strong bg-surface text-muted [&::-webkit-details-marker]:hidden"
