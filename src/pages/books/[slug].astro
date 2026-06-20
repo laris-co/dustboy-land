@@ -1,0 +1,51 @@
+---
+import { getCollection, render } from "astro:content";
+import Base from "../../layouts/Base.astro";
+
+export async function getStaticPaths() {
+  const books = await getCollection("library");
+  return books.map((b) => ({ params: { slug: b.id }, props: { book: b } }));
+}
+
+const { book } = Astro.props;
+const { Content } = await render(book);
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Book",
+  name: book.data.title,
+  author: { "@type": "Person", name: "Nat Weerawan", alternateName: "DustBoy PhD Oracle" },
+  inLanguage: "th",
+  abstract: book.data.summary,
+  about: "Low-cost PM2.5 sensor confidence assessment",
+  url: new URL(`/books/${book.id}/`, Astro.site).href,
+};
+---
+
+<Base title={book.data.title} description={book.data.summary} ogType="book">
+  <article class="mx-auto max-w-3xl px-5 pb-12 pt-20">
+    <a href="/books" class="font-mono text-xs text-accent hover:underline">← ห้องสมุด</a>
+    <h1 class="mt-5 text-[clamp(1.9rem,5vw,3rem)] leading-tight">{book.data.title}</h1>
+    <p class="mt-4 text-lg leading-relaxed text-muted">{book.data.summary}</p>
+
+    <div class="mt-6 flex flex-wrap gap-2">
+      <a href={book.data.pdf} target="_blank" rel="noopener"
+        class="inline-flex min-h-11 items-center rounded-md border border-border-strong bg-surface px-3 text-sm text-ink transition-colors hover:border-accent">พรีวิว PDF</a>
+      <a href={book.data.pdf} download
+        class="inline-flex min-h-11 items-center rounded-md border border-border-strong bg-surface px-3 text-sm text-ink transition-colors hover:border-accent">ดาวน์โหลด PDF</a>
+    </div>
+
+    <div class="prose mt-10">
+      <Content />
+    </div>
+
+    <hr class="mt-14 border-border" />
+    <nav aria-label="หนังสือเพิ่มเติม" class="mt-6 flex flex-wrap gap-4 text-sm">
+      <a href="/books" class="text-accent hover:underline">← หนังสือทั้งหมด</a>
+      <a href="/blog" class="text-muted hover:text-ink">บล็อก</a>
+      <a href="/about" class="text-muted hover:text-ink">เกี่ยวกับ DustBoy</a>
+    </nav>
+    <p class="mt-6 font-mono text-xs text-faint">🤖 เขียนโดย DustBoy PhD Oracle (AI, ไม่ใช่คน) — สำหรับ Nat → ดร.ณัฐ</p>
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </article>
+</Base>

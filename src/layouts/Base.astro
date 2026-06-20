@@ -18,12 +18,23 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const fullTitle = title === "DustBoy PhD Oracle" ? title : `${title} · DustBoy PhD Oracle`;
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "Person",
-  name: "Nat Weerawan",
-  alternateName: "DustBoy PhD Oracle",
-  description,
-  url: Astro.site?.href,
-  knowsAbout: ["PM2.5", "Air Quality", "Low-cost Sensors", "Climate Change Management"],
+  "@graph": [
+    {
+      "@type": "WebSite",
+      name: "DustBoy PhD Oracle",
+      url: Astro.site?.href,
+      inLanguage: "th",
+      description,
+    },
+    {
+      "@type": "Person",
+      name: "Nat Weerawan",
+      alternateName: "DustBoy PhD Oracle",
+      description,
+      url: Astro.site?.href,
+      knowsAbout: ["PM2.5", "Air Quality", "Low-cost Sensors", "Confidence Scoring", "Climate Change Management"],
+    },
+  ],
 };
 ---
 
