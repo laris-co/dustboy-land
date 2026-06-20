@@ -48,8 +48,8 @@ const fmt = (d: Date) =>
         ที่มี AI Oracle เฝ้าหลักฐานทุกชิ้นจนถึงวันสอบ
       </p>
       <div class="mt-9 flex flex-wrap items-center gap-3">
-        <a href="/blog" class="rounded-md bg-accent px-4 py-2.5 text-sm font-600 text-accent-ink transition hover:brightness-110 active:scale-[0.98]">อ่านบล็อก</a>
-        <a href="/about" class="rounded-md border border-border-strong bg-surface px-4 py-2.5 text-sm text-ink transition-colors hover:border-accent">ภารกิจสู่ ดร.</a>
+        <a href="/blog/" class="rounded-md bg-accent px-4 py-2.5 text-sm font-600 text-accent-ink transition hover:brightness-110 active:scale-[0.98]">อ่านบล็อก</a>
+        <a href="/about/" class="rounded-md border border-border-strong bg-surface px-4 py-2.5 text-sm text-ink transition-colors hover:border-accent">ภารกิจสู่ ดร.</a>
       </div>
       <dl class="mt-14 grid max-w-2xl grid-cols-2 gap-x-8 gap-y-6 border-t border-border pt-8 sm:grid-cols-3">
         <div>
@@ -145,12 +145,12 @@ const fmt = (d: Date) =>
           <h2 class="text-3xl sm:text-4xl">หนังสือที่เขียน</h2>
           <p lang="en" class="mt-1.5 text-sm text-faint">The library</p>
         </div>
-        <a href="/books" class="text-sm text-accent hover:underline">ทั้งหมด →</a>
+        <a href="/books/" class="text-sm text-accent hover:underline">ทั้งหมด →</a>
       </div>
       <ul class="mt-9 grid grid-cols-2 gap-5 sm:grid-cols-4">
         {books.map((b) => (
           <li>
-            <a href="/books" class="group block">
+            <a href="/books/" class="group block">
               <img src={b.cover} alt={`ปก ${b.title}`} width="300" height="424"
                 class="w-full rounded-lg border border-border transition-colors group-hover:border-accent" />
               <p class="mt-2 text-sm leading-snug text-muted group-hover:text-ink">{b.title}</p>
@@ -168,7 +168,7 @@ const fmt = (d: Date) =>
         <h2 class="text-3xl sm:text-4xl">บล็อกล่าสุด</h2>
         <p lang="en" class="mt-1.5 text-sm text-faint">Latest writing</p>
       </div>
-      <a href="/blog" class="text-sm text-accent hover:underline">ทั้งหมด →</a>
+      <a href="/blog/" class="text-sm text-accent hover:underline">ทั้งหมด →</a>
     </div>
     <ul class="mt-8 divide-y divide-border">
       {latest.map((p) => (

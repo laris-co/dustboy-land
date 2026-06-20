@@ -4,9 +4,9 @@ import ThemeToggle from "./ThemeToggle.astro";
 const path = Astro.url.pathname;
 const links = [
   { href: "/", label: "หน้าแรก" },
-  { href: "/blog", label: "บล็อก" },
-  { href: "/books", label: "หนังสือ" },
-  { href: "/about", label: "เกี่ยวกับ" },
+  { href: "/blog/", label: "บล็อก" },
+  { href: "/books/", label: "หนังสือ" },
+  { href: "/about/", label: "เกี่ยวกับ" },
 ];
 const isActive = (href: string) =>
   href === "/" ? path === "/" : path.startsWith(href);
