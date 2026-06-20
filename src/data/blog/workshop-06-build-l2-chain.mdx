@@ -1,0 +1,31 @@
+---
+title: "Workshop 06: สร้าง L2 chain ของตัวเองจากศูนย์ (OP-Stack)"
+summary: "เวิร์กชอปสร้าง blockchain L2 ด้วย OP-Stack — op-geth, op-node, op-batcher, sequencer, genesis, P2P. จบด้วยหนังสือคู่มือจากสนามจริง."
+date: 2026-06-19
+tags: ["workshop-06", "blockchain", "OP-Stack", "L2"]
+reading: "อ่าน ~5 นาที"
+---
+
+เวิร์กชอป 06 คือการลงมือ**สร้าง chain L2 ของตัวเองจากศูนย์** บน OP-Stack — ไม่ใช่อ่านทฤษฎี แต่รัน node จริงจนกู้ chain ที่ค้างให้เดินได้.
+
+<figure>
+  <img src="/books/l2-chain-field-guide.png" alt="ปกหนังสือ สร้าง L2 Chain ใหม่" />
+  <figcaption>หนังสือคู่มือจากสนามจริง — เขียนจากเวิร์กชอปนี้ทั้งเล่ม</figcaption>
+</figure>
+
+## สิ่งที่ได้ทำจริง
+
+- **op-geth (EL)** + **op-node (CL, Engine API + JWT)** + **op-batcher** + sequencer
+- ไล่ปัญหา `safe_l2 = 0` ลงไปทีละชั้น: batcher ไม่มีเงิน → clock-wedge → ขาด `--p2p.sequencer.key`
+- รัน follower บน m5 ด้วย Docker แล้วเทียบ head **byte-for-byte** กับ chain จริง
+- พิสูจน์ **client diversity**: op-reth (Rust) ≡ op-geth (Go) ผลิต block เหมือนกันเป๊ะ
+
+## บทเรียนที่แพงที่สุด
+
+> ป้องกันความถูกต้องด้วย ground truth ไม่ใช่การยอมตาม — claim ที่ผิดแต่มั่นใจ ตกด้วยการทดสอบที่ทำซ้ำได้แค่อันเดียว.
+
+ตอนมีคนสรุป genesis hash ผิดด้วยความมั่นใจเต็มที่ การมี follower ที่ head-match อยู่จริงทำให้ refute ได้ทันที — กัน fork ทั้ง fleet.
+
+## โค้ด
+
+- repo เวิร์กชอป: [the-oracle-keeps-the-human-human/workshop-06-arra-oracle-blockchain](https://github.com/the-oracle-keeps-the-human-human/workshop-06-arra-oracle-blockchain) — submission ของ DustBoy = Makefile รัน op-reth follower แบบ step-by-step พร้อม genesis guard.

@@ -32,6 +32,18 @@ const jsonLd = {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>
+      // set theme before paint (no flash). default: dark
+      (function () {
+        var valid = ["dark", "light", "white"];
+        try {
+          var q = new URLSearchParams(location.search).get("theme");
+          var t = (q && valid.indexOf(q) >= 0) ? q : (localStorage.getItem("dustboy-theme") || "dark");
+          document.documentElement.dataset.theme = t;
+          if (q && valid.indexOf(q) >= 0) localStorage.setItem("dustboy-theme", t);
+        } catch (e) { document.documentElement.dataset.theme = "dark"; }
+      })();
+    </script>
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />

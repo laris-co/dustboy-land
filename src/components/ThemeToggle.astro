@@ -1,0 +1,34 @@
+---
+// Theme switch: dark → light → white → dark. Persisted; FOUC handled in Base.astro.
+---
+<button
+  id="theme-toggle"
+  type="button"
+  aria-label="สลับธีม (Dark / Light / White)"
+  title="สลับธีม"
+  class="grid h-8 w-8 cursor-pointer place-items-center rounded-md border border-border text-muted transition-colors hover:border-accent hover:text-ink"
+>
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8" />
+    <path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" />
+  </svg>
+</button>
+
+<script is:inline>
+  (function () {
+    const order = ["dark", "light", "white"];
+    const root = document.documentElement;
+    const btn = document.getElementById("theme-toggle");
+    function label(t) { return "ธีม: " + t.charAt(0).toUpperCase() + t.slice(1) + " (คลิกเพื่อสลับ)"; }
+    function apply(t) {
+      root.dataset.theme = t;
+      try { localStorage.setItem("dustboy-theme", t); } catch (e) {}
+      if (btn) btn.title = label(t);
+    }
+    if (btn) btn.title = label(root.dataset.theme || "dark");
+    btn?.addEventListener("click", function () {
+      const cur = root.dataset.theme || "dark";
+      apply(order[(order.indexOf(cur) + 1) % order.length]);
+    });
+  })();
+</script>

@@ -27,8 +27,41 @@
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-:root {
+/* Dark is the default (the @theme tokens above). Light + White override the
+   semantic vars per theme — utilities read the vars, so they re-theme at runtime.
+   Contrast verified: body/muted text ≥ 4.5:1, accent-on-surface ≥ 3:1 in every mode. */
+:root, html[data-theme="dark"] {
   color-scheme: dark;
+}
+
+html[data-theme="light"] {
+  color-scheme: light;
+  --color-bg: oklch(0.985 0.004 220);
+  --color-surface: oklch(0.955 0.006 220);
+  --color-surface-2: oklch(0.925 0.008 220);
+  --color-ink: oklch(0.24 0.02 235);
+  --color-muted: oklch(0.44 0.022 235);
+  --color-faint: oklch(0.52 0.018 235);
+  --color-accent: oklch(0.54 0.13 222);
+  --color-accent-ink: oklch(0.99 0.01 220);
+  --color-ember: oklch(0.52 0.15 52);
+  --color-border: oklch(0.88 0.01 232);
+  --color-border-strong: oklch(0.78 0.016 232);
+}
+
+html[data-theme="white"] {
+  color-scheme: light;
+  --color-bg: oklch(1 0 0);
+  --color-surface: oklch(0.975 0 0);
+  --color-surface-2: oklch(0.95 0 0);
+  --color-ink: oklch(0.2 0.012 235);
+  --color-muted: oklch(0.42 0.016 235);
+  --color-faint: oklch(0.52 0.012 235);
+  --color-accent: oklch(0.52 0.13 222);
+  --color-accent-ink: oklch(1 0 0);
+  --color-ember: oklch(0.5 0.15 52);
+  --color-border: oklch(0.9 0 0);
+  --color-border-strong: oklch(0.8 0 0);
 }
 
 html {
@@ -122,3 +155,14 @@ a { color: inherit; text-decoration: none; }
 .prose table { width: 100%; border-collapse: collapse; margin-block: 1.2rem; font-size: 0.92rem; }
 .prose th { text-align: left; border-bottom: 1px solid var(--color-border-strong); padding: 0.5rem; color: var(--color-muted); }
 .prose td { border-bottom: 1px solid var(--color-border); padding: 0.5rem; }
+.prose img {
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  max-width: min(320px, 100%);
+  margin-block: 1.3rem;
+}
+.prose figure { margin-block: 1.5rem; }
+.prose figcaption { margin-top: 0.45rem; font-size: 0.82rem; color: var(--color-faint); }
+/* a horizontal strip of small covers */
+.covers { display: flex; flex-wrap: wrap; gap: 1rem; margin-block: 1.4rem; }
+.covers img { max-width: 150px; border: 1px solid var(--color-border); border-radius: 8px; }

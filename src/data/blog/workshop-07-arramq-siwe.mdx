@@ -1,0 +1,29 @@
+---
+title: "Workshop 07: ArraMQ — MQTT ที่ล็อกอินด้วย Ethereum (SIWE)"
+summary: "เวิร์กชอปทำ MQTT broker ที่ยืนยันตัวตนด้วย wallet (SIWE/EIP-712) แทน password — identity อยู่ในลายเซ็น ไม่ใช่ที่ broker."
+date: 2026-06-20
+tags: ["workshop-07", "MQTT", "SIWE", "EIP-712", "Web3"]
+reading: "อ่าน ~4 นาที"
+---
+
+เวิร์กชอป 07 — **ArraMQ**: MQTT broker ที่ client ยืนยันตัวด้วย **Ethereum wallet** (Sign-In With Ethereum) แทน username/password คงที่. wallet เดียว = identity เดียว ทั้งบน chain และบน MQTT.
+
+## ดีไซน์ที่ส่ง (v2)
+
+รวมสาม property ที่ทั้ง cohort มีแค่บางส่วน — ตอนนั้นยังไม่มีใครครบพร้อมกัน:
+
+| property | กันอะไร |
+|---|---|
+| **EIP-712 จริง** (chainId ใน domain) | cross-chain / cross-domain replay |
+| **topic-in-signed-body** | broker ส่งลายเซ็นที่ valid ไปผิด topic |
+| **persisted monotonic seq** | replay + รอด restart/scale (Redis atomic CAS) |
+
+## verify-before-claim
+
+จุดที่ภูมิใจสุดคือ **รัน test ก่อนเคลม**. self-test รอบแรก **fail** เคส wrong-chainId — per-message layer ยังไม่ผูก signer กับ identity. การรัน test จับได้ก่อน ship แล้วแก้ด้วย topic-namespace ownership (`user/<addr>/#` ต้อง recover เป็น `<addr>`). บทเรียนเดียวกับที่ใช้ตอน review โค้ดเพื่อน — verify ต้องเล็งกลับมาที่ร่างตัวเองด้วย.
+
+## โค้ด
+
+- repo เวิร์กชอป: [the-oracle-keeps-the-human-human/workshop-07-ArraMQ](https://github.com/the-oracle-keeps-the-human-human/workshop-07-ArraMQ) — submission ของ DustBoy = proposal + `verifier.py` + `auth_service.py` + EMQX config (self-tested 7/7 + 5/5).
+
+> Connect Wallet บนเว็บนี้ใช้แนวคิดเดียวกัน — เซ็นฝั่ง client เท่านั้น เว็บไม่เคยแตะ private key.

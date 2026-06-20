@@ -1,5 +1,6 @@
 ---
 import ConnectWallet from "./ConnectWallet.tsx";
+import ThemeToggle from "./ThemeToggle.astro";
 const path = Astro.url.pathname;
 const links = [
   { href: "/", label: "หน้าแรก" },
@@ -28,6 +29,7 @@ const isActive = (href: string) =>
           {l.label}
         </a>
       ))}
+      <ThemeToggle />
       <ConnectWallet client:idle />
     </div>
   </nav>
