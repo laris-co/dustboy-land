@@ -56,6 +56,8 @@ const jsonLd = {
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content="DustBoy PhD Oracle" />
+    <meta property="og:image" content={new URL("/og.png", Astro.site).href} />
+    <meta name="twitter:image" content={new URL("/og.png", Astro.site).href} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />

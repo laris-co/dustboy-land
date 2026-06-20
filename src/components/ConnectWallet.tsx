@@ -63,29 +63,49 @@ export default function ConnectWallet() {
     }
   }
 
+  const alert = err ? (
+    <p role="alert" aria-live="assertive"
+      className="absolute right-0 top-full z-50 mt-1 whitespace-nowrap rounded-md border border-border bg-surface px-2 py-1 text-xs"
+      style={{ color: "var(--color-ember)" }}>{err}</p>
+  ) : null;
+
   if (addr) {
     return (
-      <button
-        type="button"
-        onClick={sign}
-        disabled={busy}
-        title={signed ? "ยืนยันตัวตนแล้ว (SIWE)" : "คลิกเพื่อเซ็นยืนยันตัวตน (SIWE)"}
-        className="cursor-pointer rounded-md border border-border-strong bg-surface px-2.5 py-1.5 font-mono text-xs text-ink transition-colors hover:border-accent disabled:opacity-50"
-      >
-        <span className="mr-1.5 inline-block h-1.5 w-1.5 rounded-full align-middle" style={{ background: signed ? "var(--color-accent)" : "var(--color-ember)" }} />
-        {short(addr)}
-      </button>
+      <div className="relative">
+        <button
+          type="button"
+          onClick={sign}
+          disabled={busy}
+          aria-busy={busy}
+          aria-label={signed ? `เชื่อมต่อแล้ว ${short(addr)} · ยืนยันตัวตนแล้ว` : `เชื่อมต่อแล้ว ${short(addr)} · คลิกเพื่อเซ็นยืนยันตัวตน`}
+          title={signed ? "ยืนยันตัวตนแล้ว (SIWE)" : "คลิกเพื่อเซ็นยืนยันตัวตน (SIWE)"}
+          className="inline-flex min-h-11 cursor-pointer items-center gap-1.5 rounded-md border border-border-strong bg-surface px-2.5 font-mono text-xs text-ink transition-colors hover:border-accent active:bg-surface-2 disabled:cursor-wait disabled:opacity-70"
+        >
+          <span aria-hidden="true" style={{ color: signed ? "var(--color-accent)" : "var(--color-ember)" }}>{signed ? "✓" : "○"}</span>
+          {short(addr)}
+        </button>
+        {alert}
+      </div>
     );
   }
 
   return (
-    <button
-      type="button"
-      onClick={connect}
-      disabled={busy}
-      className="cursor-pointer rounded-md bg-accent px-3 py-1.5 text-sm font-600 text-accent-ink transition-opacity hover:opacity-90 disabled:opacity-50"
-    >
-      {busy ? "กำลังเชื่อม…" : err ?? "Connect Wallet"}
-    </button>
+    <div className="relative">
+      <button
+        type="button"
+        onClick={connect}
+        disabled={busy}
+        aria-busy={busy}
+        aria-label="เชื่อมวอลเล็ต"
+        className="inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center gap-1.5 rounded-md border border-border-strong bg-surface px-2.5 text-sm font-600 text-ink transition-colors hover:border-accent active:bg-surface-2 disabled:cursor-wait disabled:opacity-70"
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <rect x="3" y="6" width="18" height="13" rx="2.5" stroke="currentColor" stroke-width="1.8" />
+          <path d="M16.5 12.5h.01" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" />
+        </svg>
+        <span className="hidden sm:inline">{busy ? "กำลังเชื่อม…" : "เชื่อมวอลเล็ต"}</span>
+      </button>
+      {alert}
+    </div>
   );
 }

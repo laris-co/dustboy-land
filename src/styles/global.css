@@ -18,7 +18,9 @@
   --color-accent-ink: oklch(0.22 0.04 220);
   --color-ember: oklch(0.78 0.14 64);      /* burning-season ember, used sparingly */
   --color-border: oklch(0.32 0.022 232);
-  --color-border-strong: oklch(0.42 0.03 232);
+  --color-border-strong: oklch(0.52 0.03 232); /* control borders — ≥3:1 non-text contrast */
+  --haze-1: oklch(0.8 0.13 196 / 0.1);
+  --haze-2: oklch(0.78 0.14 64 / 0.06);
 
   --font-display: "Space Grotesk", "IBM Plex Sans Thai Looped", system-ui, sans-serif;
   --font-body: "IBM Plex Sans Thai Looped", "Inter", system-ui, sans-serif;
@@ -42,11 +44,13 @@ html[data-theme="light"] {
   --color-ink: oklch(0.24 0.02 235);
   --color-muted: oklch(0.44 0.022 235);
   --color-faint: oklch(0.52 0.018 235);
-  --color-accent: oklch(0.54 0.13 222);
+  --color-accent: oklch(0.5 0.14 222);     /* darkened → ≥4.5:1 as text on bg/surface */
   --color-accent-ink: oklch(0.99 0.01 220);
-  --color-ember: oklch(0.52 0.15 52);
-  --color-border: oklch(0.88 0.01 232);
-  --color-border-strong: oklch(0.78 0.016 232);
+  --color-ember: oklch(0.5 0.15 52);
+  --color-border: oklch(0.84 0.012 232);
+  --haze-1: oklch(0.5 0.14 222 / 0.1);
+  --haze-2: oklch(0.5 0.15 52 / 0.07);
+  --color-border-strong: oklch(0.62 0.016 232); /* control borders — ≥3:1 on light */
 }
 
 html[data-theme="white"] {
@@ -60,8 +64,10 @@ html[data-theme="white"] {
   --color-accent: oklch(0.52 0.13 222);
   --color-accent-ink: oklch(1 0 0);
   --color-ember: oklch(0.5 0.15 52);
-  --color-border: oklch(0.9 0 0);
-  --color-border-strong: oklch(0.8 0 0);
+  --color-border: oklch(0.86 0 0);
+  --color-border-strong: oklch(0.63 0 0); /* control borders — ≥3:1 on white */
+  --haze-1: oklch(0.52 0.13 222 / 0.09);
+  --haze-2: oklch(0.5 0.15 52 / 0.06);
 }
 
 html {
@@ -80,18 +86,21 @@ body {
   background: var(--color-bg);
   color: var(--color-ink);
   font-family: var(--font-body);
-  font-size: 1rem;
-  line-height: 1.65;
+  font-size: 1.0625rem;          /* 17px base — readable Thai body */
+  line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   min-height: 100dvh;
+  overflow-x: clip;              /* backstop: no horizontal scroll on mobile (sticky-safe) */
+  overflow-wrap: break-word;    /* Thai has no spaces — let long runs break on narrow screens */
+  word-break: break-word;
 }
 
 h1, h2, h3, h4 {
   font-family: var(--font-display);
-  letter-spacing: -0.02em;
-  line-height: 1.08;
-  text-wrap: balance;
+  letter-spacing: -0.01em;
+  line-height: 1.18;            /* room for Thai diacritic stacking */
+  text-wrap: pretty;
   color: var(--color-ink);
 }
 
@@ -101,9 +110,21 @@ a { color: inherit; text-decoration: none; }
 
 ::selection { background: var(--color-accent); color: var(--color-accent-ink); }
 
+/* scrollbar matches the theme — no eye-searing light bar on dark */
+* { scrollbar-color: var(--color-border-strong) transparent; scrollbar-width: thin; }
+::-webkit-scrollbar { width: 12px; height: 12px; }
+::-webkit-scrollbar-track { background: var(--color-bg); }
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-strong);
+  border-radius: 8px;
+  border: 3px solid var(--color-bg);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--color-faint); }
+
 :focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 3px;
+  box-shadow: 0 0 0 5px var(--color-bg); /* bg gap so the ring shows even on accent-filled controls */
   border-radius: 2px;
 }
 
@@ -113,8 +134,8 @@ a { color: inherit; text-decoration: none; }
   inset: 0;
   z-index: -1;
   background:
-    radial-gradient(60% 50% at 75% 18%, oklch(0.8 0.13 196 / 0.10), transparent 70%),
-    radial-gradient(55% 45% at 18% 12%, oklch(0.78 0.14 64 / 0.06), transparent 70%);
+    radial-gradient(60% 50% at 75% 18%, var(--haze-1), transparent 70%),
+    radial-gradient(55% 45% at 18% 12%, var(--haze-2), transparent 70%);
   pointer-events: none;
 }
 
@@ -149,20 +170,23 @@ a { color: inherit; text-decoration: none; }
   padding: 1rem 1.1rem;
   overflow-x: auto;
   margin-block: 1.2rem;
-  font-size: 0.86rem;
+  font-size: 0.9rem;
 }
 .prose pre code { background: none; padding: 0; }
-.prose table { width: 100%; border-collapse: collapse; margin-block: 1.2rem; font-size: 0.92rem; }
+.prose table { width: 100%; border-collapse: collapse; margin-block: 1.2rem; font-size: 0.95rem; }
 .prose th { text-align: left; border-bottom: 1px solid var(--color-border-strong); padding: 0.5rem; color: var(--color-muted); }
 .prose td { border-bottom: 1px solid var(--color-border); padding: 0.5rem; }
 .prose img {
   border: 1px solid var(--color-border);
   border-radius: 10px;
   max-width: min(320px, 100%);
+  height: auto;
+  aspect-ratio: 745 / 1053;     /* A4 cover — reserve space, no CLS */
+  object-fit: contain;
   margin-block: 1.3rem;
 }
 .prose figure { margin-block: 1.5rem; }
-.prose figcaption { margin-top: 0.45rem; font-size: 0.82rem; color: var(--color-faint); }
+.prose figcaption { margin-top: 0.45rem; font-size: 0.875rem; color: var(--color-faint); }
 /* a horizontal strip of small covers */
 .covers { display: flex; flex-wrap: wrap; gap: 1rem; margin-block: 1.4rem; }
-.covers img { max-width: 150px; border: 1px solid var(--color-border); border-radius: 8px; }
+.covers img { max-width: 150px; height: auto; aspect-ratio: 745 / 1053; border: 1px solid var(--color-border); border-radius: 8px; }
