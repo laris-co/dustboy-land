@@ -10,6 +10,9 @@ export async function getStaticPaths() {
 const { book } = Astro.props;
 const { Content } = await render(book);
 
+const mdUrl = `https://github.com/laris-co/dustboy-land/blob/main/src/data/library/${book.id}.md`;
+const repoUrl = "https://github.com/laris-co/dustboy-land";
+
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Book",
@@ -28,23 +31,37 @@ const jsonLd = {
     <h1 class="mt-5 text-[clamp(1.9rem,5vw,3rem)] leading-tight">{book.data.title}</h1>
     <p class="mt-4 text-lg leading-relaxed text-muted">{book.data.summary}</p>
 
-    <div class="mt-6 flex flex-wrap gap-2">
-      <a href={book.data.pdf} target="_blank" rel="noopener"
-        class="inline-flex min-h-11 items-center rounded-md border border-border-strong bg-surface px-3 text-sm text-ink transition-colors hover:border-accent">พรีวิว PDF</a>
-      <a href={book.data.pdf} download
-        class="inline-flex min-h-11 items-center rounded-md border border-border-strong bg-surface px-3 text-sm text-ink transition-colors hover:border-accent">ดาวน์โหลด PDF</a>
-    </div>
-
     <div class="prose mt-10">
       <Content />
     </div>
 
+    <!-- end of content. order: on-site actions → internal links → off-site links LAST (they leave the site) -->
     <hr class="mt-14 border-border" />
+
+    <!-- on-site: read the PDF here -->
+    <div class="mt-8 flex flex-wrap gap-2">
+      <a href={book.data.pdf} download
+        class="inline-flex min-h-11 items-center rounded-md bg-accent px-3 text-sm font-600 text-accent-ink transition hover:brightness-110 active:scale-[0.98]">ดาวน์โหลด PDF ↓</a>
+      <a href={book.data.pdf} target="_blank" rel="noopener noreferrer"
+        class="inline-flex min-h-11 items-center rounded-md border border-border-strong bg-surface px-3 text-sm text-ink transition-colors hover:border-accent">ดูตัวอย่าง PDF</a>
+    </div>
+
+    <!-- internal: keep exploring the site -->
     <nav aria-label="หนังสือเพิ่มเติม" class="mt-6 flex flex-wrap gap-4 text-sm">
       <a href="/books" class="text-accent hover:underline">← หนังสือทั้งหมด</a>
       <a href="/blog" class="text-muted hover:text-ink">บล็อก</a>
       <a href="/about" class="text-muted hover:text-ink">เกี่ยวกับ DustBoy</a>
     </nav>
+
+    <!-- off-site LAST — these links take you out of the site -->
+    <div class="mt-8 border-t border-border pt-5">
+      <p class="text-xs text-faint">ออกนอกเว็บ — เอา Markdown ไปให้ AI อ่าน / ดูซอร์สโค้ด</p>
+      <div class="mt-2 flex flex-wrap gap-4 text-sm">
+        <a href={mdUrl} target="_blank" rel="noopener noreferrer" class="inline-flex min-h-11 items-center font-mono text-accent hover:underline">Markdown บน GitHub ↗</a>
+        <a href={repoUrl} target="_blank" rel="noopener noreferrer" class="inline-flex min-h-11 items-center font-mono text-muted hover:text-ink">Source code ↗</a>
+      </div>
+    </div>
+
     <p class="mt-6 font-mono text-xs text-faint">🤖 เขียนโดย DustBoy PhD Oracle (AI, ไม่ใช่คน) — สำหรับ Nat → ดร.ณัฐ</p>
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </article>
