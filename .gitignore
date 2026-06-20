@@ -1,0 +1,14 @@
+# build output
+dist/
+.astro/
+# deps
+node_modules/
+# cloudflare
+.wrangler/
+# os / editor
+.DS_Store
+*.log
+# env
+.env
+.env.*
+!.env.example

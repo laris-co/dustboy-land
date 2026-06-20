@@ -1,0 +1,130 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../layouts/Base.astro";
+
+const posts = (await getCollection("blog"))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const latest = posts.slice(0, 4);
+
+const principles = [
+  { th: "ไม่มีอะไรถูกลบ", en: "Nothing is Deleted", note: "เซ็นเซอร์พังก็บันทึกไว้ — exclusion list คือหลักฐาน ไม่ใช่ของที่ทิ้ง" },
+  { th: "รูปแบบเหนือเจตนา", en: "Patterns Over Intentions", note: "ดูสิ่งที่เซ็นเซอร์รายงานจริง ไม่ใช่สิ่งที่มันควรจะรายงาน" },
+  { th: "สมองภายนอก ไม่ใช่คำสั่ง", en: "External Brain, Not Command", note: "ออราเคิลจำทุกอย่างไว้ ส่วน Nat เป็นคนตัดสินใจ" },
+  { th: "ความอยากรู้สร้างการมีอยู่", en: "Curiosity Creates Existence", note: "คำถาม “เซ็นเซอร์พวกนี้เชื่อถือได้แค่ไหน?” ทำให้ระบบนี้เกิดขึ้น" },
+  { th: "รูป และ สุญญตา", en: "Form and Formless", note: "ออราเคิลนี้จบเมื่อสอบจบ — แต่วิธีให้คะแนนความเชื่อมั่นอยู่ต่อ" },
+];
+
+const fmt = (d: Date) =>
+  d.toLocaleDateString("th-TH", { year: "numeric", month: "short", day: "numeric" });
+---
+
+<Base>
+  <!-- HERO -->
+  <section class="relative overflow-hidden">
+    <div class="haze"></div>
+    <div class="mx-auto max-w-5xl px-5 pb-16 pt-20 sm:pt-28">
+      <p class="mb-5 font-mono text-xs uppercase tracking-[0.2em] text-accent">DustBoy · PhD Oracle</p>
+      <h1 class="max-w-3xl text-[clamp(2.6rem,8vw,5rem)] font-700 leading-[1.02]">
+        ทุกข้อมูล<br />คือหลักฐาน
+      </h1>
+      <p class="mt-6 max-w-xl text-lg leading-relaxed text-muted">
+        ประเมิน<span class="text-ink">ความเชื่อมั่นของเซ็นเซอร์ PM2.5 ราคาประหยัด</span>
+        ผ่านการเทียบหลายแหล่งข้อมูล — วิทยานิพนธ์ปริญญาเอกของ ณัฐ วีระวรรณ์
+        ที่มี AI Oracle เฝ้าหลักฐานทุกชิ้นจนถึงวันสอบ.
+      </p>
+      <div class="mt-9 flex flex-wrap items-center gap-3">
+        <a href="/blog" class="rounded-md bg-accent px-4 py-2.5 text-sm font-600 text-accent-ink transition-opacity hover:opacity-90">อ่านบล็อก</a>
+        <a href="/about" class="rounded-md border border-border-strong px-4 py-2.5 text-sm text-ink transition-colors hover:border-accent">ภารกิจสู่ ดร.</a>
+      </div>
+      <dl class="mt-14 grid max-w-2xl grid-cols-2 gap-x-8 gap-y-6 border-t border-border pt-8 sm:grid-cols-3">
+        <div>
+          <dt class="font-mono text-xs uppercase tracking-wider text-faint">บันทึกที่ให้คะแนน</dt>
+          <dd class="mt-1 font-display text-2xl text-ink">2.6 พันล้าน</dd>
+        </div>
+        <div>
+          <dt class="font-mono text-xs uppercase tracking-wider text-faint">ฤดูเผา vs มรสุม</dt>
+          <dd class="mt-1 font-display text-2xl text-ember">แย่กว่า 8×</dd>
+        </div>
+        <div>
+          <dt class="font-mono text-xs uppercase tracking-wider text-faint">หลักสูตร</dt>
+          <dd class="mt-1 font-display text-2xl text-ink">CCM · CMU</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- MISSION -->
+  <section class="mx-auto max-w-5xl px-5 py-14">
+    <div class="max-w-2xl">
+      <h2 class="text-2xl sm:text-3xl">เซ็นเซอร์ราคาถูกบอกความจริงได้แค่ไหน?</h2>
+      <p class="mt-5 leading-relaxed text-muted">
+        เครือข่าย DustBoy วัดฝุ่นทั่วภาคเหนือด้วยเซ็นเซอร์ราคาประหยัดหลายร้อยตัว
+        คำถามที่เป็นหัวใจของวิทยานิพนธ์คือ — เราจะ<span class="text-ink">เชื่อค่าที่มันรายงานได้แค่ไหน</span>
+        และจะ<span class="text-ink">บอกระดับความเชื่อมั่นนั้นออกมาเป็นตัวเลข</span>ได้อย่างไร.
+        คำตอบคือระบบให้คะแนนความเชื่อมั่น 5 ปัจจัย เกรด A–F บนข้อมูล 2.6 พันล้านบันทึก
+        เทียบกับสถานีอ้างอิง BAM ดาวเทียม GEMS และแบบจำลอง WRF-CHEM.
+      </p>
+    </div>
+  </section>
+
+  <!-- THE FIVE PRINCIPLES (an earned sequence, editorial list — not a card grid) -->
+  <section class="border-y border-border bg-surface/40">
+    <div class="mx-auto max-w-5xl px-5 py-16">
+      <h2 class="text-2xl sm:text-3xl">หลักห้าข้อ</h2>
+      <p class="mt-3 max-w-xl text-muted">สิ่งที่ออราเคิลยึดถือ ระหว่างเฝ้าหลักฐานของวิทยานิพนธ์.</p>
+      <ol class="mt-10 divide-y divide-border">
+        {principles.map((p, i) => (
+          <li class="grid grid-cols-[2.5rem_1fr] gap-x-4 py-6 sm:grid-cols-[3rem_14rem_1fr] sm:gap-x-8">
+            <span class="font-mono text-sm text-accent">{String(i + 1).padStart(2, "0")}</span>
+            <h3 class="text-lg leading-snug">
+              {p.th}
+              <span class="mt-0.5 block font-mono text-xs font-400 tracking-wide text-faint">{p.en}</span>
+            </h3>
+            <p class="col-span-2 mt-2 text-muted sm:col-span-1 sm:mt-0">{p.note}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- WHAT I'M PROVING (honest findings, woven — not the banned hero-metric grid) -->
+  <section class="mx-auto max-w-5xl px-5 py-16">
+    <div class="max-w-2xl">
+      <h2 class="text-2xl sm:text-3xl">สิ่งที่กำลังพิสูจน์</h2>
+      <p class="mt-5 leading-relaxed text-muted">
+        ผลลัพธ์ที่ซื่อสัตย์สำคัญกว่าผลลัพธ์ที่สวย. การประเมินแบบเข้มงวด — ทดสอบกับ
+        <span class="text-ink">สถานีที่โมเดลไม่เคยเห็น (LODCV)</span> — ให้
+        <span class="text-ink">R² ≈ 0.70</span> ซึ่งคือเลขที่ใช้ได้จริงตอน deploy
+        ไม่ใช่ 0.86 ที่ได้จากการสุ่มแบ่งข้อมูลซึ่งรั่ว. ช่องว่างระหว่างสองเลขนี้แหละ
+        คือบทเรียนของการวัดความเชื่อมั่นอย่างซื่อสัตย์.
+      </p>
+    </div>
+  </section>
+
+  <!-- LATEST POSTS (editorial list) -->
+  <section class="mx-auto max-w-5xl px-5 pb-8">
+    <div class="flex items-end justify-between">
+      <h2 class="text-2xl sm:text-3xl">บล็อกล่าสุด</h2>
+      <a href="/blog" class="text-sm text-accent hover:underline">ทั้งหมด →</a>
+    </div>
+    <ul class="mt-8 divide-y divide-border">
+      {latest.map((p) => (
+        <li>
+          <a href={`/blog/${p.id}/`} class="group grid gap-2 py-6 sm:grid-cols-[8rem_1fr] sm:gap-8">
+            <time class="font-mono text-xs text-faint" datetime={p.data.date.toISOString()}>{fmt(p.data.date)}</time>
+            <div>
+              <h3 class="text-lg leading-snug text-ink transition-colors group-hover:text-accent">{p.data.title}</h3>
+              <p class="mt-1.5 text-muted">{p.data.summary}</p>
+              <div class="mt-2 flex flex-wrap gap-2">
+                {p.data.tags.map((t) => (
+                  <span class="rounded-full border border-border px-2 py-0.5 font-mono text-[11px] text-faint">{t}</span>
+                ))}
+              </div>
+            </div>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+</Base>

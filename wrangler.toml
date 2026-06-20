@@ -1,0 +1,8 @@
+name = "dustboy-land"
+compatibility_date = "2026-06-20"
+
+[assets]
+directory = "./dist"
+
+# Custom domain (Landing Oracle wires this on deploy):
+#   dustboy.buildwithoracle.com

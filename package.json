@@ -1,0 +1,32 @@
+{
+  "name": "dustboy-land",
+  "type": "module",
+  "version": "0.1.0",
+  "description": "DustBoy PhD Oracle — landing page + blog (dustboy.buildwithoracle.com)",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/cloudflare": "^12.6.12",
+    "@astrojs/mdx": "^4.3.0",
+    "@astrojs/react": "^4.4.0",
+    "@astrojs/rss": "^4.0.12",
+    "@astrojs/sitemap": "^3.6.0",
+    "astro": "^5.17.1",
+    "nanostores": "^1.1.0",
+    "@nanostores/react": "^1.0.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.18",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "tailwindcss": "^4.1.18",
+    "typescript": "^5.8.3",
+    "wrangler": "^4.63.0"
+  }
+}
