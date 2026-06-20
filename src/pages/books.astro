@@ -1,0 +1,158 @@
+---
+import Base from "../layouts/Base.astro";
+
+const books = [
+  { slug: "confidence-of-dust", title: "The Confidence of Dust", blurb: "หัวใจของวิทยานิพนธ์ — จะบอก “เชื่อค่านี้ได้แค่ไหน” อย่างไร" },
+  { slug: "every-data-point", title: "Every Data Point Is Evidence", blurb: "ปรัชญา “ไม่มีอะไรถูกลบ” กับ chain of evidence" },
+  { slug: "spare-hardware", title: "Spare Hardware, Real Science", blurb: "ทำวิทยาศาสตร์จริงด้วยฮาร์ดแวร์เหลือใช้ (GPU เก่า + cloud)" },
+  { slug: "children-of-atlas", title: "Children of Atlas", blurb: "เรื่องเล่าของ fleet ที่แบกความรู้ต่อกัน" },
+  { slug: "l2-chain-field-guide", title: "สร้าง L2 Chain ใหม่", blurb: "คู่มือ OP-Stack จากสนามจริง — ติดตั้ง ปัญหา วิธีแก้", repo: "https://github.com/the-oracle-keeps-the-human-human/workshop-06-arra-oracle-blockchain" },
+  { slug: "death-at-second-54", title: "Death at Second 54", blurb: "partition-tolerant GPU compute จากฮาร์ดแวร์เหลือใช้" },
+  { slug: "crew-up-8-phases", title: "Crew-Up — 8 Phases", blurb: "สูตรตั้งทีม coder agent 8 เฟส (charter → teardown)" },
+];
+---
+
+<Base title="หนังสือ" description="ห้องสมุด DustBoy PhD Oracle — อ่านหนังสือ PDF ได้ในเว็บเลย ไม่ต้องออกไปไหน.">
+  <section class="mx-auto max-w-5xl px-5 pb-8 pt-20">
+    <p lang="en" class="mb-4 font-mono text-xs tracking-wide text-accent">LIBRARY</p>
+    <h1 class="text-[clamp(2.2rem,6vw,3.5rem)] leading-tight">ห้องสมุด</h1>
+    <p lang="en" class="mt-2 font-display text-base text-faint">Read every book right here</p>
+    <p class="mt-5 max-w-xl text-muted">หนังสือที่กลั่นจากงานจริง — กด “อ่านในเว็บ” แล้วพลิกอ่านได้เลย ไม่ต้องออกจากหน้านี้.</p>
+
+    <ul class="mt-12 grid gap-8 sm:grid-cols-2">
+      {books.map((b) => (
+        <li class="flex gap-5">
+          <img src={`/books/${b.slug}.png`} alt={`ปก ${b.title}`} width="120" height="170"
+            class="h-fit w-[100px] shrink-0 rounded-lg border border-border" loading="lazy" />
+          <div class="min-w-0">
+            <h2 class="text-lg leading-snug">{b.title}</h2>
+            <p class="mt-1.5 text-sm text-muted">{b.blurb}</p>
+            <div class="mt-3 flex flex-wrap gap-2">
+              <button type="button" data-pdf={`/books/${b.slug}.pdf`} data-title={b.title}
+                class="inline-flex min-h-11 cursor-pointer items-center rounded-md bg-accent px-3 text-sm font-600 text-accent-ink transition hover:brightness-110 active:scale-[0.98]">
+                อ่านในเว็บ
+              </button>
+              <a href={`/books/${b.slug}.pdf`} download
+                class="inline-flex min-h-11 items-center rounded-md border border-border-strong bg-surface px-3 text-sm text-ink transition-colors hover:border-accent">
+                ดาวน์โหลด
+              </a>
+              {b.repo && (
+                <a href={b.repo} target="_blank" rel="noopener noreferrer"
+                  class="inline-flex min-h-11 items-center rounded-md border border-border-strong bg-surface px-3 text-sm text-muted transition-colors hover:border-accent hover:text-ink">
+                  source <span aria-hidden="true" class="ml-1">↗</span>
+                </a>
+              )}
+            </div>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <!-- in-page PDF reader (PDF.js → canvas; no iframe) -->
+  <div id="reader" class="fixed inset-0 z-[100] hidden items-start justify-center bg-black/70 p-4 backdrop-blur-sm">
+    <div class="flex h-[92dvh] w-full max-w-3xl flex-col overflow-hidden rounded-xl border border-border-strong bg-surface">
+      <div class="flex items-center justify-between gap-3 border-b border-border px-4 py-3">
+        <p id="reader-title" class="truncate text-sm font-600 text-ink"></p>
+        <div class="flex items-center gap-2">
+          <span id="pg-nav" class="flex items-center gap-2">
+            <button id="pg-prev" type="button" aria-label="หน้าก่อน" class="grid h-9 w-9 cursor-pointer place-items-center rounded-md border border-border-strong bg-bg text-ink hover:border-accent">‹</button>
+            <span id="pg-ind" class="min-w-16 text-center font-mono text-xs text-muted">…</span>
+            <button id="pg-next" type="button" aria-label="หน้าถัดไป" class="grid h-9 w-9 cursor-pointer place-items-center rounded-md border border-border-strong bg-bg text-ink hover:border-accent">›</button>
+          </span>
+          <a id="reader-dl" href="#" download class="ml-1 hidden items-center rounded-md border border-border-strong bg-bg px-2.5 text-xs text-muted hover:text-ink sm:inline-flex sm:min-h-9">↓ PDF</a>
+          <button id="reader-close" type="button" aria-label="ปิด" class="grid h-9 w-9 cursor-pointer place-items-center rounded-md border border-border-strong bg-bg text-ink hover:border-accent">✕</button>
+        </div>
+      </div>
+      <div id="reader-scroll" class="flex-1 overflow-auto bg-bg p-3 text-center">
+        <canvas id="pdf-canvas" class="mx-auto max-w-full rounded"></canvas>
+        <div id="pdf-fallback" class="hidden h-full w-full"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    import * as pdfjsLib from "pdfjs-dist";
+    import workerUrl from "pdfjs-dist/build/pdf.worker.min.mjs?url";
+    pdfjsLib.GlobalWorkerOptions.workerSrc = workerUrl;
+
+    const overlay = document.getElementById("reader")!;
+    const canvas = document.getElementById("pdf-canvas") as HTMLCanvasElement;
+    const ctx = canvas.getContext("2d")!;
+    const ind = document.getElementById("pg-ind")!;
+    const navBox = document.getElementById("pg-nav")!;
+    const titleEl = document.getElementById("reader-title")!;
+    const dl = document.getElementById("reader-dl") as HTMLAnchorElement;
+    const scroll = document.getElementById("reader-scroll")!;
+    const fb = document.getElementById("pdf-fallback")!;
+    let pdf: any = null, page = 1, pages = 0, rendering = false;
+
+    async function render() {
+      if (!pdf || rendering) return;
+      rendering = true;
+      try {
+        const p = await pdf.getPage(page);
+        const dpr = window.devicePixelRatio || 1;
+        const cw = Math.min((scroll.clientWidth || 700) - 24, 800);
+        const s = cw / p.getViewport({ scale: 1 }).width;
+        const vp = p.getViewport({ scale: s * dpr });
+        canvas.width = vp.width; canvas.height = vp.height;
+        canvas.style.width = vp.width / dpr + "px";
+        await p.render({ canvasContext: ctx, viewport: vp }).promise;
+        ind.textContent = page + " / " + pages;
+        scroll.scrollTop = 0;
+      } finally {
+        rendering = false;
+      }
+    }
+    // Fallback: render the LOCAL pdf with the browser's native viewer (same-origin, not an external iframe).
+    function useFallback(url: string) {
+      navBox.classList.add("hidden");
+      canvas.classList.add("hidden");
+      fb.innerHTML =
+        '<object data="' + url + '#view=FitH" type="application/pdf" class="h-full min-h-[78dvh] w-full" aria-label="PDF reader">' +
+        '<p class="p-8 text-muted">เปิดในเว็บไม่ได้ — <a class="text-accent underline" href="' + url + '" download>ดาวน์โหลด PDF</a></p></object>';
+      fb.classList.remove("hidden");
+    }
+    async function open(url: string, title: string) {
+      overlay.classList.remove("hidden");
+      overlay.classList.add("flex");
+      document.body.style.overflow = "hidden";
+      titleEl.textContent = title;
+      dl.href = url;
+      ind.textContent = "…";
+      fb.classList.add("hidden"); fb.innerHTML = "";
+      canvas.classList.remove("hidden"); navBox.classList.remove("hidden");
+      try {
+        pdf = await Promise.race([
+          pdfjsLib.getDocument({ url: new URL(url, location.origin).href }).promise,
+          new Promise((_, rej) => setTimeout(() => rej(new Error("timeout")), 6000)),
+        ]);
+        pages = pdf.numPages; page = 1;
+        await render();
+      } catch {
+        pdf = null;
+        useFallback(url);   // PDF.js unavailable → native local-PDF viewer, still on our site
+      }
+    }
+    function close() {
+      overlay.classList.add("hidden");
+      overlay.classList.remove("flex");
+      document.body.style.overflow = "";
+      pdf = null;
+    }
+    document.querySelectorAll<HTMLElement>("[data-pdf]").forEach((b) =>
+      b.addEventListener("click", () => open(b.dataset.pdf!, b.dataset.title!))
+    );
+    document.getElementById("pg-prev")!.addEventListener("click", () => { if (page > 1) { page--; render(); } });
+    document.getElementById("pg-next")!.addEventListener("click", () => { if (page < pages) { page++; render(); } });
+    document.getElementById("reader-close")!.addEventListener("click", close);
+    overlay.addEventListener("click", (e) => { if (e.target === overlay) close(); });
+    addEventListener("keydown", (e) => {
+      if (overlay.classList.contains("hidden")) return;
+      if (e.key === "Escape") close();
+      if (e.key === "ArrowRight" && page < pages) { page++; render(); }
+      if (e.key === "ArrowLeft" && page > 1) { page--; render(); }
+    });
+  </script>
+</Base>

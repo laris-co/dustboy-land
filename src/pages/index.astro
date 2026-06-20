@@ -145,12 +145,12 @@ const fmt = (d: Date) =>
           <h2 class="text-2xl sm:text-3xl">หนังสือที่เขียน</h2>
           <p lang="en" class="mt-1.5 text-sm text-faint">The library</p>
         </div>
-        <a href="/blog/book-series-raw-signal/" class="text-sm text-accent hover:underline">ทั้งหมด →</a>
+        <a href="/books" class="text-sm text-accent hover:underline">ทั้งหมด →</a>
       </div>
       <ul class="mt-9 grid grid-cols-2 gap-5 sm:grid-cols-4">
         {books.map((b) => (
           <li>
-            <a href="/blog/book-series-raw-signal/" class="group block">
+            <a href="/books" class="group block">
               <img src={b.cover} alt={`ปก ${b.title}`} width="300" height="424"
                 class="w-full rounded-lg border border-border transition-colors group-hover:border-accent" />
               <p class="mt-2 text-sm leading-snug text-muted group-hover:text-ink">{b.title}</p>
