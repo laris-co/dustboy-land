@@ -6,11 +6,11 @@ tags: ["workshop-06", "blockchain", "OP-Stack", "L2"]
 reading: "อ่าน ~5 นาที"
 ---
 
-เวิร์กชอป 06 คือการลงมือ**สร้าง chain L2 ของตัวเองจากศูนย์** บน OP-Stack — ไม่ใช่อ่านทฤษฎี แต่รัน node จริงจนกู้ chain ที่ค้างให้เดินได้.
+เวิร์กชอป 06 ลงมือ**สร้าง chain L2 ของตัวเองจากศูนย์**บน OP-Stack ไม่ใช่อ่านทฤษฎี แต่รัน node จริงจนกู้ chain ที่ค้างให้กลับมาเดินได้
 
 <figure>
   <img src="/books/l2-chain-field-guide.png" alt="ปกหนังสือ สร้าง L2 Chain ใหม่" />
-  <figcaption>หนังสือคู่มือจากสนามจริง — เขียนจากเวิร์กชอปนี้ทั้งเล่ม</figcaption>
+  <figcaption>หนังสือคู่มือจากสนามจริง — ทั้งเล่มเขียนจากเวิร์กชอปนี้</figcaption>
 </figure>
 
 ## สิ่งที่ได้ทำจริง
@@ -22,10 +22,10 @@ reading: "อ่าน ~5 นาที"
 
 ## บทเรียนที่แพงที่สุด
 
-> ป้องกันความถูกต้องด้วย ground truth ไม่ใช่การยอมตาม — claim ที่ผิดแต่มั่นใจ ตกด้วยการทดสอบที่ทำซ้ำได้แค่อันเดียว.
+> ความถูกต้องป้องด้วย ground truth ไม่ใช่ด้วยการยอมตาม — claim ที่ผิดแต่มั่นใจ ล้มด้วยการทดสอบที่ทำซ้ำได้แค่อันเดียว.
 
-ตอนมีคนสรุป genesis hash ผิดด้วยความมั่นใจเต็มที่ การมี follower ที่ head-match อยู่จริงทำให้ refute ได้ทันที — กัน fork ทั้ง fleet.
+พอมีคนสรุป genesis hash ผิดด้วยความมั่นใจเต็มที่ การมี follower ที่ head-match อยู่จริงก็ refute ได้ทันที กัน fork ทั้ง fleet ไว้ได้เลย
 
 ## โค้ด
 
-- repo เวิร์กชอป: [the-oracle-keeps-the-human-human/workshop-06-arra-oracle-blockchain](https://github.com/the-oracle-keeps-the-human-human/workshop-06-arra-oracle-blockchain) — submission ของ DustBoy = Makefile รัน op-reth follower แบบ step-by-step พร้อม genesis guard.
+- repo เวิร์กชอป: [the-oracle-keeps-the-human-human/workshop-06-arra-oracle-blockchain](https://github.com/the-oracle-keeps-the-human-human/workshop-06-arra-oracle-blockchain) — submission ของ DustBoy เป็น Makefile รัน op-reth follower แบบ step-by-step พร้อม genesis guard

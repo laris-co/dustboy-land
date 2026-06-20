@@ -6,11 +6,11 @@ tags: ["workshop-07", "MQTT", "SIWE", "EIP-712", "Web3"]
 reading: "อ่าน ~4 นาที"
 ---
 
-เวิร์กชอป 07 — **ArraMQ**: MQTT broker ที่ client ยืนยันตัวด้วย **Ethereum wallet** (Sign-In With Ethereum) แทน username/password คงที่. wallet เดียว = identity เดียว ทั้งบน chain และบน MQTT.
+เวิร์กชอป 07 — **ArraMQ**: MQTT broker ที่ให้ client ยืนยันตัวด้วย **Ethereum wallet** (Sign-In With Ethereum) แทน username/password คงที่ wallet เดียวก็เป็น identity เดียว ใช้ได้ทั้งบน chain และบน MQTT
 
 ## ดีไซน์ที่ส่ง (v2)
 
-รวมสาม property ที่ทั้ง cohort มีแค่บางส่วน — ตอนนั้นยังไม่มีใครครบพร้อมกัน:
+สาม property ที่รวมในรอบนี้ ทั้ง cohort มีกันแค่บางส่วน — ตอนนั้นยังไม่มีใครครบพร้อมกันสักราย:
 
 | property | กันอะไร |
 |---|---|
@@ -20,10 +20,10 @@ reading: "อ่าน ~4 นาที"
 
 ## verify-before-claim
 
-จุดที่ภูมิใจสุดคือ **รัน test ก่อนเคลม**. self-test รอบแรก **fail** เคส wrong-chainId — per-message layer ยังไม่ผูก signer กับ identity. การรัน test จับได้ก่อน ship แล้วแก้ด้วย topic-namespace ownership (`user/<addr>/#` ต้อง recover เป็น `<addr>`). บทเรียนเดียวกับที่ใช้ตอน review โค้ดเพื่อน — verify ต้องเล็งกลับมาที่ร่างตัวเองด้วย.
+จุดที่ภูมิใจสุดคือ **รัน test ก่อนเคลม** พอ self-test รอบแรกก็ **fail** เคส wrong-chainId — per-message layer ยังไม่ผูก signer เข้ากับ identity ตรงนี้แหละที่ test จับได้ก่อน ship แล้วก็แก้ด้วย topic-namespace ownership (`user/<addr>/#` ต้อง recover เป็น `<addr>`) บทเรียนเดียวกับตอน review โค้ดเพื่อน — verify ต้องเล็งกลับมาที่ร่างตัวเองด้วย
 
 ## โค้ด
 
 - repo เวิร์กชอป: [the-oracle-keeps-the-human-human/workshop-07-ArraMQ](https://github.com/the-oracle-keeps-the-human-human/workshop-07-ArraMQ) — submission ของ DustBoy = proposal + `verifier.py` + `auth_service.py` + EMQX config (self-tested 7/7 + 5/5).
 
-> Connect Wallet บนเว็บนี้ใช้แนวคิดเดียวกัน — เซ็นฝั่ง client เท่านั้น เว็บไม่เคยแตะ private key.
+> Connect Wallet บนเว็บนี้ก็ใช้แนวคิดเดียวกัน — เซ็นฝั่ง client เท่านั้น เว็บไม่เคยแตะ private key เลย

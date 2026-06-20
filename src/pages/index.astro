@@ -45,7 +45,7 @@ const fmt = (d: Date) =>
       <p class="mt-6 max-w-xl text-lg leading-relaxed text-muted">
         ประเมิน<span class="text-ink">ความเชื่อมั่นของเซ็นเซอร์ PM2.5 ราคาประหยัด</span>
         ผ่านการเทียบหลายแหล่งข้อมูล — วิทยานิพนธ์ปริญญาเอกของ ณัฐ วีระวรรณ์
-        ที่มี AI Oracle เฝ้าหลักฐานทุกชิ้นจนถึงวันสอบ.
+        ที่มี AI Oracle เฝ้าหลักฐานทุกชิ้นจนถึงวันสอบ
       </p>
       <div class="mt-9 flex flex-wrap items-center gap-3">
         <a href="/blog" class="rounded-md bg-accent px-4 py-2.5 text-sm font-600 text-accent-ink transition hover:brightness-110 active:scale-[0.98]">อ่านบล็อก</a>
@@ -75,10 +75,10 @@ const fmt = (d: Date) =>
       <p lang="en" class="mt-1.5 text-sm text-faint">How much truth can a low-cost sensor tell?</p>
       <p class="mt-5 leading-relaxed text-muted">
         เครือข่าย DustBoy วัดฝุ่นทั่วภาคเหนือด้วยเซ็นเซอร์ราคาประหยัดหลายร้อยตัว
-        คำถามที่เป็นหัวใจของวิทยานิพนธ์คือ — เราจะ<span class="text-ink">เชื่อค่าที่มันรายงานได้แค่ไหน</span>
-        และจะ<span class="text-ink">บอกระดับความเชื่อมั่นนั้นออกมาเป็นตัวเลข</span>ได้อย่างไร.
-        คำตอบคือระบบให้คะแนนความเชื่อมั่น 5 ปัจจัย เกรด A–F บนข้อมูล 2.6 พันล้านบันทึก
-        เทียบกับสถานีอ้างอิง BAM ดาวเทียม GEMS และแบบจำลอง WRF-CHEM.
+        คำถามหัวใจของวิทยานิพนธ์คือ — เราจะ<span class="text-ink">เชื่อค่าที่รายงานมาได้แค่ไหน</span>
+        แล้วจะ<span class="text-ink">บอกระดับความเชื่อมั่นนั้นออกมาเป็นตัวเลข</span>ได้ยังไง
+        คำตอบก็คือระบบให้คะแนนความเชื่อมั่น 5 ปัจจัย เกรด A–F บนข้อมูล 2.6 พันล้านบันทึก
+        เทียบกับสถานีอ้างอิง BAM ดาวเทียม GEMS และแบบจำลอง WRF-CHEM
       </p>
     </div>
   </section>
@@ -88,7 +88,7 @@ const fmt = (d: Date) =>
     <div class="mx-auto max-w-5xl px-5 py-16">
       <h2 class="text-3xl sm:text-4xl">หลักห้าข้อ</h2>
       <p lang="en" class="mt-1.5 text-sm text-faint">The Five Principles</p>
-      <p class="mt-3 max-w-xl text-muted">สิ่งที่ออราเคิลยึดถือ ระหว่างเฝ้าหลักฐานของวิทยานิพนธ์.</p>
+      <p class="mt-3 max-w-xl text-muted">สิ่งที่ออราเคิลยึดถือ ระหว่างเฝ้าหลักฐานของวิทยานิพนธ์</p>
       <ol class="mt-10 divide-y divide-border">
         {principles.map((p, i) => (
           <li class="grid grid-cols-[2.5rem_1fr] gap-x-4 py-6 sm:grid-cols-[3rem_14rem_1fr] sm:gap-x-8">
@@ -110,11 +110,11 @@ const fmt = (d: Date) =>
       <h2 class="text-3xl sm:text-4xl">สิ่งที่กำลังพิสูจน์</h2>
       <p lang="en" class="mt-1.5 text-sm text-faint">What I'm proving</p>
       <p class="mt-5 leading-relaxed text-muted">
-        ผลลัพธ์ที่ซื่อสัตย์สำคัญกว่าผลลัพธ์ที่สวย. การประเมินแบบเข้มงวด — ทดสอบกับ
+        ผลลัพธ์ที่ซื่อสัตย์สำคัญกว่าผลลัพธ์ที่สวย การประเมินแบบเข้มงวด — ทดสอบกับ
         <span class="text-ink">สถานีที่โมเดลไม่เคยเห็น (LODCV)</span> — ให้
-        <span class="text-ink">R² ≈ 0.70</span> ซึ่งคือเลขที่ใช้ได้จริงตอน deploy
-        ไม่ใช่ 0.86 ที่ได้จากการสุ่มแบ่งข้อมูลซึ่งรั่ว. ช่องว่างระหว่างสองเลขนี้แหละ
-        คือบทเรียนของการวัดความเชื่อมั่นอย่างซื่อสัตย์.
+        <span class="text-ink">R² ≈ 0.70</span> เลขที่ใช้ได้จริงตอน deploy
+        ไม่ใช่ 0.86 ที่ได้จากการสุ่มแบ่งข้อมูลแบบรั่ว ช่องว่างระหว่างสองเลขนี้แหละ
+        คือบทเรียนของการวัดความเชื่อมั่นอย่างซื่อสัตย์
       </p>
     </div>
   </section>
