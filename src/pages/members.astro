@@ -1,0 +1,19 @@
+---
+import Base from "../layouts/Base.astro";
+import SiweLogin from "../components/SiweLogin.tsx";
+---
+
+<Base title="สมาชิก" description="พื้นที่สมาชิก DustBoy — Sign-In With Ethereum (SIWE) เพื่อปลดล็อกเนื้อหาเฉพาะ address ของคุณ">
+  <section class="mx-auto max-w-5xl px-5 pb-12 pt-20">
+    <p lang="en" class="mb-4 font-mono text-xs tracking-wide text-accent">MEMBERS</p>
+    <h1 class="text-[clamp(2.2rem,6vw,3.5rem)] leading-tight">พื้นที่สมาชิก</h1>
+    <p lang="en" class="mt-2 font-display text-base text-faint">Sign in with your Ethereum wallet</p>
+    <p class="mt-5 max-w-2xl text-muted">
+      ลงชื่อด้วย Ethereum wallet (SIWE) — เซ็นข้อความเพื่อพิสูจน์ตัวตน แล้วปลดล็อกเนื้อหาเฉพาะ address ของคุณ
+      เว็บเก็บแค่ session ที่เซ็นแล้ว ไม่เคยแตะ private key
+    </p>
+    <div class="mt-10">
+      <SiweLogin client:load />
+    </div>
+  </section>
+</Base>

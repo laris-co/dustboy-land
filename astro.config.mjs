@@ -9,7 +9,7 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   site: "https://dustboy.buildwithoracle.com",
   output: "static",
-  trailingSlash: "always",
+  // links already carry trailing slashes (no 307s); leave endpoints (/api/*) slash-free.
   adapter: cloudflare(),
   integrations: [react(), mdx(), sitemap()],
   vite: {

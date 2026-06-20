@@ -1,8 +1,13 @@
 name = "dustboy-land"
+main = "./dist/_worker.js/index.js"
 compatibility_date = "2026-06-20"
+compatibility_flags = ["nodejs_compat"]
 
+# Static assets + the on-demand worker (for the SIWE /api/* routes).
 [assets]
+binding = "ASSETS"
 directory = "./dist"
 
-# Custom domain (Landing Oracle wires this on deploy):
-#   dustboy.buildwithoracle.com
+# REQUIRED before deploy (session/nonce signing secret):
+#   npx wrangler secret put SESSION_SECRET
+# Custom domain: dustboy.buildwithoracle.com
